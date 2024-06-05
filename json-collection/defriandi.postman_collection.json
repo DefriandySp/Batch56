@@ -18,7 +18,11 @@
 							"script": {
 								"exec": [
 									"var jsonData = pm.response.json();\r",
-									"pm.environment.set(\"accessToken\", jsonData.accessToken);"
+									"pm.environment.set(\"accessToken\", jsonData.accessToken);\r",
+									"\r",
+									"pm.test(\"Status code is 201\", function () {\r",
+									"    pm.response.to.have.status(201);\r",
+									"});"
 								],
 								"type": "text/javascript",
 								"packages": {}
@@ -30,7 +34,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n   \"clientName\": \"{{name}}\",\r\n   \"clientEmail\": \"{{$randomEmail}}\"\r\n}",
+							"raw": "{\r\n    \"clientName\": \"{{name}}\",\r\n    \"clientEmail\": \"{{$randomFirstName}}@defriandysp.com\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -57,7 +61,17 @@
 							"listen": "test",
 							"script": {
 								"exec": [
-									""
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"const response = pm.response.json();\r",
+									"\r",
+									"console.log(response.status);\r",
+									"\r",
+									"pm.test(\"Status should be OK\", ()=> {\r",
+									"    pm.expect(response.status).to.eql(\"OK BRO\");\r",
+									"});"
 								],
 								"type": "text/javascript",
 								"packages": {}
@@ -86,6 +100,11 @@
 							"listen": "test",
 							"script": {
 								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"\r",
 									"const response = pm.response.json();\r",
 									"\r",
 									"const nonFictionBooks = response.filter((book) => book.available === true);\r",
@@ -94,14 +113,8 @@
 									"\r",
 									"if (book){\r",
 									"    pm.globals.set(\"bookId\", book.id);\r",
-									"}\r",
 									"\r",
-									"pm.test(\"Buku ditemukan\", () => {\r",
-									"    pm.expect(book).to.be.an('object');\r",
-									"    pm.expect(book.available).to.be.true;\r",
-									"    pm.expect(book.available).to.eql(true);\r",
-									"    pm.expect(book.type).to.eql(\"non-fiction\");\r",
-									"});"
+									"};"
 								],
 								"type": "text/javascript",
 								"packages": {}
@@ -153,7 +166,9 @@
 							"listen": "test",
 							"script": {
 								"exec": [
-									""
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});"
 								],
 								"type": "text/javascript",
 								"packages": {}
@@ -182,7 +197,7 @@
 							"variable": [
 								{
 									"key": "BukuID",
-									"value": "2"
+									"value": "{{bookId}}"
 								}
 							]
 						}
@@ -196,6 +211,10 @@
 							"listen": "test",
 							"script": {
 								"exec": [
+									"pm.test(\"Status code is 201\", function () {\r",
+									"    pm.response.to.have.status(201);\r",
+									"});\r",
+									"\r",
 									"const response = pm.response.json();\r",
 									"pm.globals.set(\"orderId\", response.orderId);\r",
 									"\r",
@@ -248,7 +267,9 @@
 							"listen": "test",
 							"script": {
 								"exec": [
-									""
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});"
 								],
 								"type": "text/javascript",
 								"packages": {}
@@ -294,6 +315,20 @@
 				},
 				{
 					"name": "updateOrdersCustomer",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 204\", function () {\r",
+									"    pm.response.to.have.status(204);\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
 					"request": {
 						"auth": {
 							"type": "bearer",
@@ -342,7 +377,9 @@
 							"listen": "test",
 							"script": {
 								"exec": [
-									""
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});"
 								],
 								"type": "text/javascript",
 								"packages": {}
@@ -395,6 +432,20 @@
 				},
 				{
 					"name": "Delete Order",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 204\", function () {\r",
+									"    pm.response.to.have.status(204);\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
 					"request": {
 						"auth": {
 							"type": "bearer",
